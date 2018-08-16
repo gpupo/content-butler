@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source .env.dist
+
+DST="$1";
+vendor/bin/vlt  --credentials ${JACKRABBIT_USERNAME}:${JACKRABBIT_PASSWORD} co --force "http://${JACKRABBIT_SERVER}:${JACKRABBIT_PORT}/server/default/jcr:root" "$DST"
