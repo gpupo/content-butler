@@ -24,17 +24,28 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Doctrine\ODM\PHPCR\Document\Generic;
+use Symfony\Component\Console\Input\InputOption;
+
 
 class DirectoryCommand extends Command
 {
     private $documentManager;
+
+    private $splitter;
 
     protected function configure()
     {
         $this
             ->setName('butler:import:directory')
             ->setDescription('Put directory files to repository')
-            ->addArgument('directory', InputArgument::REQUIRED, 'Source Directory');
+            ->addArgument('directory', InputArgument::REQUIRED, 'Source Directory')
+            ->addOption(
+                'splitter',
+                's',
+                InputOption::VALUE_REQUIRED,
+                'String to split root path',
+                'jcr_root'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -42,9 +53,15 @@ class DirectoryCommand extends Command
         $argument = $input->getArgument('directory');
         $directory = ('/' === $argument[0]) ? $argument : sprintf('%s/%s', getcwd(), $argument);
         $finder = new Finder();
-        $finder->files()->name('*.jpg')->in($directory);
+        $finder->files()
+            ->name('*.jpg')
+            ->name('*.gif')
+            ->name('*.svg')
+            ->name('*.css')
+            ->in($directory);
 
         $this->documentManager = $this->getHelper('phpcr')->getDocumentManager();
+        $this->splitter = $input->getOption('splitter');
 
         foreach ($finder as $find) {
             $this->saveFile($find, $output);
@@ -111,7 +128,7 @@ class DirectoryCommand extends Command
         $list=[
             'real'  => $find->getRealPath(),
         ];
-        $fx = explode('jcr_root', $find->getRealPath());
+        $fx = explode($this->splitter, $find->getRealPath());
         $list['full'] = end($fx);
         $list['relative'] = $find->getRelativePathname();
         $nx = explode('/', $list['full']);
