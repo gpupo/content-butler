@@ -30,6 +30,7 @@ $cli = new \Symfony\Component\Console\Application("Content Butler", $server);
 $cli->setCatchExceptions(true);
 $cli->setHelperSet($helperSet);
 $cli->addCommands(array(
+    new \Gpupo\ContentButler\Command\Import\DirectoryCommand(),
     new \PHPCR\Util\Console\Command\NodeDumpCommand(),
     new \PHPCR\Util\Console\Command\NodeMoveCommand(),
     new \PHPCR\Util\Console\Command\NodeRemoveCommand(),

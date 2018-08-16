@@ -33,7 +33,7 @@ $session = $repository->login($credentials, $jackrabbit_workspace);
 $config = new \Doctrine\ODM\PHPCR\Configuration();
 $driver = new \Doctrine\ODM\PHPCR\Mapping\Driver\AnnotationDriver(
     new \Doctrine\Common\Annotations\AnnotationReader(),
-    'src/DoctrinePhpcrOdm/Document/',
+    'src/Document/',
     'vendor/doctrine/phpcr-odm/lib/Doctrine/ODM/PHPCR/Document'
 );
 $config->setMetadataDriverImpl($driver);
