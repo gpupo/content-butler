@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Document;
 
-
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
 
 /**

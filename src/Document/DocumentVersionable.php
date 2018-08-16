@@ -25,12 +25,12 @@ use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
 class DocumentVersionable extends Document
 {
     /**
-    * @PHPCR\VersionName
-    */
-   private $versionName;
+     * @PHPCR\VersionName
+     */
+    private $versionName;
 
-   /**
-    * @PHPCR\VersionCreated
-    */
-   private $versionCreated;
+    /**
+     * @PHPCR\VersionCreated
+     */
+    private $versionCreated;
 }

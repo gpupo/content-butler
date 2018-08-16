@@ -17,53 +17,51 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Command\Import;
 
+use Doctrine\ODM\PHPCR\Document\File;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ODM\PHPCR\DocumentManager;
-use Doctrine\ODM\PHPCR\Mapping\MappingException;
-use Doctrine\ODM\PHPCR\Document\File;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Console\Input\InputArgument;
 
 class DirectoryCommand extends Command
 {
-  protected function configure()
-  {
-      $this
-          ->setName('butler:import:directory')
-          ->setDescription('Put directory files to repository')
-          ->addArgument('directory', InputArgument::REQUIRED, 'Source Directory');
-  }
+    protected function configure()
+    {
+        $this
+            ->setName('butler:import:directory')
+            ->setDescription('Put directory files to repository')
+            ->addArgument('directory', InputArgument::REQUIRED, 'Source Directory');
+    }
 
-  protected function execute(InputInterface $input, OutputInterface $output)
-  {
-      $documentManager = $this->getHelper('phpcr')->getDocumentManager();
-      $parentDocument = $documentManager->find(null, '/');
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $documentManager = $this->getHelper('phpcr')->getDocumentManager();
+        $parentDocument = $documentManager->find(null, '/');
 
-      $argument = $input->getArgument('directory');
+        $argument = $input->getArgument('directory');
 
-      $directory = ('/' === $argument[0])  ? $argument : sprintf('%s/%s', getcwd(), $argument);
+        $directory = ('/' === $argument[0]) ? $argument : sprintf('%s/%s', getcwd(), $argument);
 
-      $finder = new Finder();
-      $finder->files()->name('*.jpg')->in($directory);
+        $finder = new Finder();
+        $finder->files()->name('*.jpg')->in($directory);
 
-      foreach ($finder as $f) {
-          $file = new File();
-          $file->setFileContentFromFilesystem($f->getRealPath());
-          $nodeName = $this->resolveNodePath($f->getRealPath());
-          $output->writeln(sprintf("Node <info>%s</>", $nodeName));
+        foreach ($finder as $f) {
+            $file = new File();
+            $file->setFileContentFromFilesystem($f->getRealPath());
+            $nodeName = $this->resolveNodePath($f->getRealPath());
+            $output->writeln(sprintf('Node <info>%s</>', $nodeName));
 
-          if ($documentManager->find(null, $nodeName)) {
-              $output->writeln(sprintf("Node <warning>%s</> already exists", $nodeName));
-          } else {
-              $output->writeln(sprintf("Saving node <info>%s</>", $nodeName));
-              $file->setNodename($nodeName);
-              $file->setParentDocument($parentDocument);
-              $documentManager->persist($file);
-              $documentManager->flush();
-          }
-       }
+            if ($documentManager->find(null, $nodeName)) {
+                $output->writeln(sprintf('Node <warning>%s</> already exists', $nodeName));
+            } else {
+                $output->writeln(sprintf('Saving node <info>%s</>', $nodeName));
+                $file->setNodename($nodeName);
+                $file->setParentDocument($parentDocument);
+                $documentManager->persist($file);
+                $documentManager->flush();
+            }
+        }
     }
 
     protected function resolveNodePath($realPath)
