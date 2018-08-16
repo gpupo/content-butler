@@ -23,9 +23,12 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+use Doctrine\ODM\PHPCR\Document\Generic;
 
 class DirectoryCommand extends Command
 {
+    private $documentManager;
+
     protected function configure()
     {
         $this
@@ -36,38 +39,85 @@ class DirectoryCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $documentManager = $this->getHelper('phpcr')->getDocumentManager();
-        $parentDocument = $documentManager->find(null, '/');
-
         $argument = $input->getArgument('directory');
-
         $directory = ('/' === $argument[0]) ? $argument : sprintf('%s/%s', getcwd(), $argument);
-
         $finder = new Finder();
         $finder->files()->name('*.jpg')->in($directory);
 
-        foreach ($finder as $f) {
-            $file = new File();
-            $file->setFileContentFromFilesystem($f->getRealPath());
-            $nodeName = $this->resolveNodePath($f->getRealPath());
-            $output->writeln(sprintf('Node <info>%s</>', $nodeName));
+        $this->documentManager = $this->getHelper('phpcr')->getDocumentManager();
 
-            if ($documentManager->find(null, $nodeName)) {
-                $output->writeln(sprintf('Node <warning>%s</> already exists', $nodeName));
-            } else {
-                $output->writeln(sprintf('Saving node <info>%s</>', $nodeName));
-                $file->setNodename($nodeName);
-                $file->setParentDocument($parentDocument);
-                $documentManager->persist($file);
-                $documentManager->flush();
-            }
+        foreach ($finder as $find) {
+            $this->saveFile($find, $output);
         }
     }
 
-    protected function resolveNodePath($realPath)
+    protected function saveFile($find, $output)
     {
-        $explode = explode('jcr_root/', $realPath);
+        $node = $this->resolveNodePath($find);
 
-        return end($explode);
+        if ($this->documentManager->find(null, $node['full'])) {
+            $output->writeln(sprintf('Node <error>%s</> already exists', $node['full']));
+        } else {
+            $output->writeln(sprintf('Saving node <info>%s</>', $node['full']));
+
+            $file = $this->factoryFile($node);
+            $this->documentManager->persist($file);
+            $this->documentManager->flush();
+        }
+    }
+
+    protected function factoryFile(array $node): File
+    {
+        $parent = $this->resolvParentDocument($node['parent']);
+        $file = new File();
+        $file->setFileContentFromFilesystem($node['real']);
+        $file->setNodename($node['name']);
+        $file->setParentDocument($parent);
+
+        return $file;
+    }
+
+    protected function createParentDocument($path, $recursive = true): Generic
+    {
+        $nx = explode('/', $path);
+        $list = ['path' => $path];
+        $list['name'] = array_pop($nx);
+        $list['parent'] = implode('/', $nx);
+
+        $parent = $this->resolvParentDocument($list['parent']);
+
+        $generic = new Generic();
+        $generic->setNodename($list['name']);
+        $generic->setParentDocument($parent);
+        $this->documentManager->persist($generic);
+        $this->documentManager->flush();
+
+        return $generic;
+    }
+
+    protected function resolvParentDocument($path): Generic
+    {
+        $parent = $this->documentManager->find(null, $path);
+
+        if(empty($parent)) {
+            return $this->createParentDocument($path);
+        }
+
+        return $parent;
+    }
+
+    protected function resolveNodePath($find): array
+    {
+        $list=[
+            'real'  => $find->getRealPath(),
+        ];
+        $fx = explode('jcr_root', $find->getRealPath());
+        $list['full'] = end($fx);
+        $list['relative'] = $find->getRelativePathname();
+        $nx = explode('/', $list['full']);
+        $list['name'] = array_pop($nx);
+        $list['parent'] = implode('/', $nx);
+
+        return $list;
     }
 }
