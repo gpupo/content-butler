@@ -38,6 +38,8 @@ Register node types
 
 ## Backup
 
+### Export
+
 Export repository with Filesystem Copy:
 
     docker cp "$(docker-compose ps -q content-server)":/opt/jackrabbit var/opt/
@@ -45,3 +47,14 @@ Export repository with Filesystem Copy:
 Clone (SVN style)
 
     ./bin/clone var/clone
+
+
+### Import
+
+Example, load fixture:
+
+	./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
+
+Load SVN style
+
+	./bin/console butler:import:directory var/clone

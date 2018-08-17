@@ -18,61 +18,16 @@ declare(strict_types=1);
 namespace Gpupo\ContentButler\Document;
 
 use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
-
+use Doctrine\ODM\PHPCR\Document\File;
 /**
  * @PHPCR\Document
  */
-class Document
+class Document extends File
 {
     /**
-     * @PHPCR\Id
+     * @PHPCR\Field(type="string", nullable=true)
      */
-    private $id;
-
-    /**
-     * @PHPCR\ParentDocument
-     */
-    private $parent;
-
-    /**
-     * @PHPCR\Nodename
-     */
-    private $name;
-
-    /**
-     * @PHPCR\Children
-     */
-    private $children;
-
-    /**
-     * @PHPCR\Field(type="string")
-     */
-    private $title;
-
-    /**
-     * @PHPCR\Field(type="string")
-     */
-    private $content;
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    public function setParent($parent)
-    {
-        $this->parent = $parent;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
+    protected $title;
 
     public function setTitle($title)
     {
@@ -82,15 +37,5 @@ class Document
     public function getTitle()
     {
         return $this->title;
-    }
-
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    public function getContent()
-    {
-        return $this->content;
     }
 }

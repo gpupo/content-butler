@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Doctrine\ODM\PHPCR\Document\Generic;
 use Symfony\Component\Console\Input\InputOption;
-
+use Gpupo\ContentButler\Document\Document;
 
 class DirectoryCommand extends Command
 {
@@ -53,18 +53,20 @@ class DirectoryCommand extends Command
         $argument = $input->getArgument('directory');
         $directory = ('/' === $argument[0]) ? $argument : sprintf('%s/%s', getcwd(), $argument);
         $finder = new Finder();
-        $finder->files()
-            ->name('*.jpg')
-            ->name('*.gif')
-            ->name('*.svg')
-            ->name('*.css')
-            ->in($directory);
+        $finder->files()->in($directory)->ignoreVCS(true);
+        foreach(explode('|', 'jpg|jpeg|gif|css|png|js|ico|html|xml|txt|pdf|svg|webp|woff') as $ftype) {
+            $finder->name(sprintf('*.%s', $ftype));
+        }
 
         $this->documentManager = $this->getHelper('phpcr')->getDocumentManager();
         $this->splitter = $input->getOption('splitter');
 
         foreach ($finder as $find) {
-            $this->saveFile($find, $output);
+            try {
+                $this->saveFile($find, $output);
+            } catch (\Exception $e) {
+                $output->writeln(sprintf('<error>%s</>', $e->getMessage()));
+            }
         }
     }
 
@@ -83,10 +85,10 @@ class DirectoryCommand extends Command
         }
     }
 
-    protected function factoryFile(array $node): File
+    protected function factoryFile(array $node): Document
     {
         $parent = $this->resolvParentDocument($node['parent']);
-        $file = new File();
+        $file = new Document();
         $file->setFileContentFromFilesystem($node['real']);
         $file->setNodename($node['name']);
         $file->setParentDocument($parent);
