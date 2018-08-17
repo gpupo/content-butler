@@ -7,6 +7,12 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 * Docker
 * Composer
 
+## Features
+
+* Content Repository with Apache Jackrabbit
+* Webpage server with Image resize
+
+
 
 ## Install
 
@@ -64,3 +70,17 @@ Example, load fixture:
 Load SVN style
 
 	./bin/console butler:import:directory var/clone;
+
+## Explore
+
+Content Repository
+
+1. First, import fixtures;
+1. Check [Jackrabbit dashboard](http://localhost:8080/)
+1. [Browse files](http://localhost:8080/repository/default/) and see some [Sheeps](http://localhost:8080/repository/default/fixture/extra/photos/sheep-3562868-pixabay.jpg)
+
+Nginx frontend
+
+1. Check if you keep seen [sheeps](http://localhost/fixture/extra/photos/sheep-3562868-pixabay.jpg)
+1. Check if you can seen [litle sheeps](http://localhost/img/100x10/fixture/extra/photos/sheep-3562868-pixabay.jpg)
+1. Browse resources 
