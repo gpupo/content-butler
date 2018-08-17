@@ -10,31 +10,38 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 ## Install
 
-    git clone git@github.com:gpupo/content-butler.git
+    git clone git@github.com:gpupo/content-butler.git;
     cd content-butler;
+
+Copy env file
+
+    cp .env.dist .env
+
+Install dependencies
+
     composer install;
 
 Create docker machines
 
-    docker-compose up --no-start
+    docker-compose up --no-start;
 
 Copy files to machines (optional)
 
-    docker cp config/empty.gif "$(docker-compose ps -q nginx)":/usr/share/nginx/html/empty.gif
+    docker cp config/empty.gif "$(docker-compose ps -q nginx)":/usr/share/nginx/html/empty.gif;
 
-    #If previous repository exists:
-    docker cp var/opt/jackrabbit/repository "$(docker-compose ps -q content-server)":/opt/jackrabbit/
-    docker cp var/opt/jackrabbit/workspaces "$(docker-compose ps -q content-server)":/opt/jackrabbit/
-    docker cp var/opt/jackrabbit/version "$(docker-compose ps -q content-server)":/opt/jackrabbit/
+If previous repository exists (see backup):
 
+    docker cp var/opt/jackrabbit/repository "$(docker-compose ps -q content-server)":/opt/jackrabbit/;
+    docker cp var/opt/jackrabbit/workspaces "$(docker-compose ps -q content-server)":/opt/jackrabbit/;
+    docker cp var/opt/jackrabbit/version "$(docker-compose ps -q content-server)":/opt/jackrabbit/;
 
 Up docker services
 
-    docker-compose up
+    docker-compose up;
 
 Register node types
 
-    ./bin/console doctrine:phpcr:register-system-node-types
+    ./bin/console doctrine:phpcr:register-system-node-types;
 
 ## Backup
 
@@ -42,19 +49,18 @@ Register node types
 
 Export repository with Filesystem Copy:
 
-    docker cp "$(docker-compose ps -q content-server)":/opt/jackrabbit var/opt/
+    docker cp "$(docker-compose ps -q content-server)":/opt/jackrabbit var/opt/;
 
 Clone (SVN style)
 
-    ./bin/clone var/clone
-
+    ./bin/clone var/clone;
 
 ### Import
 
 Example, load fixture:
 
-	./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
+	./bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
 
 Load SVN style
 
-	./bin/console butler:import:directory var/clone
+	./bin/console butler:import:directory var/clone;
