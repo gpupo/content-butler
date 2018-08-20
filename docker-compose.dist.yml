@@ -16,6 +16,6 @@ services:
         environment:
           - VIRTUAL_HOST=${VIRTUAL_HOST}
     php:
-        image: gpupo/container-orchestration:php-fpm
+        image: gpupo/container-orchestration:php-dev
         volumes:
           - $PWD/:/var/www/app
