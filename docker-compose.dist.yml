@@ -19,3 +19,10 @@ services:
         image: gpupo/container-orchestration:php-dev
         volumes:
           - $PWD/:/var/www/app
+        command: echo "byes"
+    java:
+        image: openjdk:slim
+        volumes:
+          - $PWD/:/usr/src/myapp
+        command: echo "bye"
+        working_dir: /usr/src/myapp

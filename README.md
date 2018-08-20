@@ -4,8 +4,7 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 ## Requirements
 
-* Docker
-* Composer
+* Docker Compose
 
 ## Features
 
@@ -21,17 +20,15 @@ Copy config files (and customize)
 
     cp .env.dist .env
 	cp docker-compose.dist.yml docker-compose.yml
+	config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
 
 Create docker machines
 
     docker-compose up --no-start;
 
-
 Install dependencies
 
-	docker-compose exec php bash;
-
-    composer install;
+	docker-compose run php composer install
 
 Copy files to machines (optional)
 
@@ -45,11 +42,11 @@ If previous repository exists (see backup):
 
 Up docker services
 
-    docker-compose up;
+    docker-compose up -d;
 
 Register node types
 
-    ./bin/console doctrine:phpcr:register-system-node-types;
+    docker-compose run php bin/console doctrine:phpcr:register-system-node-types;
 
 
 ### Alternative storage location
@@ -71,17 +68,17 @@ Export repository with Filesystem Copy:
 
 Clone (SVN style)
 
-    ./bin/clone var/clone;
+	docker-compose run java bin/clone var/dest_directory;
 
 ### Import
 
 Example, load fixture:
 
-	./bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
+	docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
 
 Load SVN style
 
-	./bin/console butler:import:directory var/clone;
+	docker-compose run php bin/console butler:import:directory var/clone;
 
 ## Explore
 
