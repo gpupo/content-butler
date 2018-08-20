@@ -29,9 +29,8 @@ Create docker machines
 
 Install dependencies
 
-	docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
-	gpupo/container-orchestration:php-dev
-	
+	docker-compose exec php bash;
+
     composer install;
 
 Copy files to machines (optional)

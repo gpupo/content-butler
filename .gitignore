@@ -4,3 +4,4 @@ vendor/*
 .php_cs.cache
 docker-compose.yml
 .env
+htpasswd.conf
