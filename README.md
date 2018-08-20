@@ -95,4 +95,4 @@ Nginx frontend
 
 1. Check if you keep seen [sheeps](http://localhost/fixture/extra/photos/sheep-3562868-pixabay.jpg)
 1. Check if you can seen [litle sheeps](http://localhost/img/100x100/fixture/extra/photos/sheep-3562868-pixabay.jpg)
-1. Browse resources
+1. Browse [default repository](http://localhost/repository/default)
