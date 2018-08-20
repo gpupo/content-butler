@@ -12,8 +12,6 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 * Content Repository with Apache Jackrabbit
 * Webpage server with Image resize
 
-
-
 ## Install
 
     git clone git@github.com:gpupo/content-butler.git;
@@ -24,14 +22,14 @@ Copy config files (and customize)
     cp .env.dist .env
 	cp docker-compose.dist.yml docker-compose.yml
 
+Create docker machines
+
+    docker-compose up --no-start;
+
 
 Install dependencies
 
     composer install;
-
-Create docker machines
-
-    docker-compose up --no-start;
 
 Copy files to machines (optional)
 

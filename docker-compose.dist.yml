@@ -15,3 +15,7 @@ services:
           - $PWD/var/jackrabbit:/opt/jackrabbit
         environment:
           - VIRTUAL_HOST=${VIRTUAL_HOST}
+    php:
+        image: gpupo/container-orchestration:php-fpm
+        volumes:
+          - $PWD/:/var/www/app
