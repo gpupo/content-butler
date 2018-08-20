@@ -19,9 +19,11 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
     git clone git@github.com:gpupo/content-butler.git;
     cd content-butler;
 
-Copy env file
+Copy config files (and customize)
 
     cp .env.dist .env
+	cp docker-compose.dist.yml docker-compose.yml
+
 
 Install dependencies
 
@@ -48,6 +50,16 @@ Up docker services
 Register node types
 
     ./bin/console doctrine:phpcr:register-system-node-types;
+
+
+### Alternative storage location
+
+	docker cp  "$(docker-compose ps -q content-server)":/opt/jackrabbit var/jackrabbit;
+
+add volume to docker file:
+
+	- $PWD/var/jackrabbit:/opt/jackrabbit
+
 
 ## Backup
 
@@ -82,5 +94,5 @@ Content Repository
 Nginx frontend
 
 1. Check if you keep seen [sheeps](http://localhost/fixture/extra/photos/sheep-3562868-pixabay.jpg)
-1. Check if you can seen [litle sheeps](http://localhost/img/100x10/fixture/extra/photos/sheep-3562868-pixabay.jpg)
-1. Browse resources 
+1. Check if you can seen [litle sheeps](http://localhost/img/100x100/fixture/extra/photos/sheep-3562868-pixabay.jpg)
+1. Browse resources

@@ -2,3 +2,5 @@ var/*
 vendor/*
 *.lock
 .php_cs.cache
+docker-compose.dist.yml
+.env
