@@ -18,17 +18,18 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 Copy config files (and customize)
 
-    cp .env.dist .env
-	cp docker-compose.dist.yml docker-compose.yml
-	config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
+    	cp .env.dist .env
+    cp docker-compose.dist.yml docker-compose.yml
+    config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
 
-Create docker machines
+Create docker volume and machines
 
+    docker volume create jackrabbit-storage;
     docker-compose up --no-start;
 
 Install dependencies
 
-	docker-compose run php composer install
+    docker-compose run php composer install
 
 Copy files to machines (optional)
 
@@ -48,14 +49,13 @@ Register node types
 
     docker-compose run php bin/console doctrine:phpcr:register-system-node-types;
 
-
 ### Alternative storage location
 
-	docker cp  "$(docker-compose ps -q content-server)":/opt/jackrabbit var/jackrabbit;
+    docker cp  "$(docker-compose ps -q content-server)":/opt/jackrabbit var/jackrabbit;
 
 add volume to docker file:
 
-	- $PWD/var/jackrabbit:/opt/jackrabbit
+    - $PWD/var/jackrabbit:/opt/jackrabbit
 
 
 ## Backup
@@ -68,17 +68,17 @@ Export repository with Filesystem Copy:
 
 Clone (SVN style)
 
-	docker-compose run java bin/clone var/dest_directory;
+    docker-compose run java bin/clone var/dest_directory;
 
 ### Import
 
 Example, load fixture:
 
-	docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
+    docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
 
 Load SVN style
 
-	docker-compose run php bin/console butler:import:directory var/clone;
+    docker-compose run php bin/console butler:import:directory var/clone;
 
 ## Explore
 
