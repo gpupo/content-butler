@@ -22,6 +22,10 @@ Copy config files (and customize)
     cp docker-compose.dist.yml docker-compose.yml
     cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
 
+
+Set passwords: default user is admin with admin password. You must edit htpasswd file with new values and that [generator](http://www.htaccesstools.com/htpasswd-generator/) is a usefull tool.
+
+
 Create docker volume and machines
 
     docker volume create jackrabbit-storage; #optional
@@ -75,6 +79,10 @@ Clone (SVN style)
 Example, load fixture:
 
     docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
+
+or
+
+	docker-compose run php bin/fixture
 
 Load SVN style
 

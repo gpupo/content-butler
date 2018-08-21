@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bin/console doctrine:phpcr:register-system-node-types;
+bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
