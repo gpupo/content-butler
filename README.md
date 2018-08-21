@@ -18,13 +18,13 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 Copy config files (and customize)
 
-    	cp .env.dist .env
+    cp .env.dist .env; #optional
     cp docker-compose.dist.yml docker-compose.yml
-    config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
+    cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
 
 Create docker volume and machines
 
-    docker volume create jackrabbit-storage;
+    docker volume create jackrabbit-storage; #optional
     docker-compose up --no-start;
 
 Install dependencies
