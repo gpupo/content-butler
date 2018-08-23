@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace Gpupo\ContentButler\Tests\Helpers;
 
 use Gpupo\ContentButler\Document\Document;
-use Gpupo\ContentButler\Helpers\FileHelper;
+use Gpupo\ContentButler\Helpers\DocumentHelper;
 use Gpupo\ContentButler\Tests\TestCaseAbstract;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
@@ -26,7 +26,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * @coversNothing
  */
-class FileHelperTest extends TestCaseAbstract
+class DocumentHelperTest extends TestCaseAbstract
 {
     /**
      * @dataProvider dataProviderPaths
@@ -35,7 +35,7 @@ class FileHelperTest extends TestCaseAbstract
      */
     public function testFactoryDocument($string, SplFileInfo $expectedFileInfo)
     {
-        $helper = new FileHelper($this->getHelperSet()->get('phpcr')->getDocumentManager(), 'Resources');
+        $helper = new DocumentHelper($this->getHelperSet()->get('phpcr')->getDocumentManager(), 'Resources');
         $fileInfo = $helper->factoryFileInfo($string);
         $this->assertInstanceof(SplFileInfo::class, $fileInfo);
         $data = $helper->resolveFileData($fileInfo);
@@ -51,7 +51,7 @@ class FileHelperTest extends TestCaseAbstract
      */
     public function testSaveDocument($string)
     {
-        $helper = new FileHelper($this->getHelperSet()->get('phpcr')->getDocumentManager(), 'Resources');
+        $helper = new DocumentHelper($this->getHelperSet()->get('phpcr')->getDocumentManager(), 'Resources');
         $document = $helper->factoryDocument($string);
         $this->assertInstanceof(Document::class, $document);
     }

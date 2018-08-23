@@ -22,11 +22,11 @@ use Gpupo\ContentButler\Document\Document;
 use Gpupo\ContentButler\Document\DocumentVersionable;
 use SplFileInfo;
 
-class FileHelper
+class DocumentHelper
 {
     protected $documentManager;
 
-    protected $nodeHelper;
+    protected $folderHelper;
 
     protected $splitter;
 
@@ -35,7 +35,7 @@ class FileHelper
     public function __construct(DocumentManager $documentManager, string $splitter = './', $versionable = false)
     {
         $this->documentManager = $documentManager;
-        $this->nodeHelper = new FolderHelper($this->documentManager);
+        $this->folderHelper = new FolderHelper($this->documentManager);
         $this->splitter = $splitter;
         $this->versionable = $versionable;
     }
@@ -53,7 +53,7 @@ class FileHelper
 
     public function factoryDocumentFromFileData(array $fileData): Document
     {
-        $parent = $this->nodeHelper->resolvParentDocument($fileData['parent']);
+        $parent = $this->folderHelper->resolvParentDocument($fileData['parent']);
 
         if (true === $this->versionable) {
             $file = new DocumentVersionable();

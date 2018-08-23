@@ -17,7 +17,8 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Command\Import;
 
-use Gpupo\ContentButler\Helpers\FileHelper;
+use Gpupo\ContentButler\Document\Document;
+use Gpupo\ContentButler\Helpers\DocumentHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +30,7 @@ use Symfony\Component\Finder\SplFileInfo;
 abstract class AbstractCommand extends Command
 {
     protected $documentManager;
-    protected $fileHelper;
+    protected $documentHelper;
 
     protected function configure()
     {
@@ -56,26 +57,33 @@ abstract class AbstractCommand extends Command
 
         $this->documentManager = $this->getHelper('phpcr')->getDocumentManager();
         $splitter = $input->getOption('splitter');
-        $this->fileHelper = new FileHelper($this->documentManager, $splitter);
+        $this->documentHelper = new DocumentHelper($this->documentManager, $splitter);
 
         foreach ($finder as $fileInfo) {
             try {
-                $this->saveFile($fileInfo, $output);
+                $this->persistDocument($fileInfo, $output);
             } catch (\Exception $e) {
                 $output->writeln(sprintf('<error>%s</>', $e->getMessage()));
             }
         }
     }
 
-    protected function saveFile(SplFileInfo $fileInfo, $output): void
+    protected function persistDocument(SplFileInfo $fileInfo, $output): void
     {
-        $document = $this->fileHelper->factoryDocument($fileInfo);
+        $document = $this->factoryDocument($fileInfo);
+        $output->writeln(sprintf('Saving node <info>%s</>', $document->getEndpoint()));
+        $this->documentManager->persist($document);
+        $this->documentManager->flush();
+    }
+
+    protected function factoryDocument($fileInfo): Document
+    {
+        $document = $this->documentHelper->factoryDocument($fileInfo);
 
         if ($this->documentManager->find(null, $document->getEndpoint())) {
             throw new \Exception(sprintf('Node %s already exists', $document->getEndpoint()));
         }
-        $output->writeln(sprintf('Saving node <info>%s</>', $document->getEndpoint()));
-        $this->documentManager->persist($document);
-        $this->documentManager->flush();
+
+        return $document;
     }
 }
