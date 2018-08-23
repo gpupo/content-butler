@@ -40,13 +40,13 @@ class DocumentHelper
         $this->versionable = $versionable;
     }
 
-    public function factoryDocument($fileInfo): Document
+    public function factoryDocument($fileInfo, $millenialInteger = null, $overshadow = null): Document
     {
-        if (!$fileInfo instanceof SplFileInfo) {
-            $fileInfo = $this->factoryFileInfo($fileInfo);
+        if (empty($millenialInteger)) {
+            $data = $this->resolveFileData($fileInfo);
+        } else {
+            $data = $this->resolveMillenialFileData($fileInfo, $millenialInteger, $overshadow);
         }
-
-        $data = $this->resolveFileData($fileInfo);
 
         return $this->factoryDocumentFromFileData($data);
     }
@@ -75,8 +75,12 @@ class DocumentHelper
         return $fileInfo;
     }
 
-    public function resolveFileData(SplFileInfo $fileInfo): array
+    public function resolveFileData($fileInfo): array
     {
+        if (!$fileInfo instanceof SplFileInfo) {
+            $fileInfo = $this->factoryFileInfo($fileInfo);
+        }
+
         $list = [
             'path' => $fileInfo->getRealPath(),
         ];
@@ -85,7 +89,22 @@ class DocumentHelper
         $nx = explode('/', $list['full']);
         $list['name'] = array_pop($nx);
         $list['parent'] = implode('/', $nx);
+        $list['extension'] = $fileInfo->getExtension();
 
         return $list;
+    }
+
+    public function resolveMillenialFileData($fileInfo, $millenialInteger, $overshadow = null): array
+    {
+        $mh = new MillennialHelper();
+        $data = $this->resolveFileData($fileInfo);
+        $data['parent'] = $mh->calculate($millenialInteger);
+        $data['integer'] = $millenialInteger;
+
+        if (!empty($overshadow)) {
+            $data['name'] = sprintf('%s.%s', substr(sha1($data['name']), 0, 8), $data['extension']);
+        }
+
+        return $data;
     }
 }

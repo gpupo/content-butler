@@ -17,11 +17,19 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Command\Import;
 
+use Gpupo\ContentButler\Document\Document;
+
 class MillenialCommand extends AbstractCommand
 {
     protected function configure()
     {
         parent::configure();
-        $this->setName('butler:import:millenial')->setDescription('Put directory files to repository with millenial node paths');
+        $this->setName('butler:import:millenial')
+            ->setDescription('Put directory files to repository with millenial node paths');
+    }
+
+    protected function factoryDocument($fileInfo): Document
+    {
+        return $this->documentHelper->factoryDocument($fileInfo, $this->iteration, $this->overshadow);
     }
 }

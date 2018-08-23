@@ -32,12 +32,16 @@ class MillennialHelper
         $m = floor($x);
         $c = $number - ($m * 1000);
 
-        return sprintf('%s/%s', $this->resolvLetter($m), $this->resolvLetter($c));
+        return sprintf('%s/%s', $this->resolveLetter($m), $this->resolveLetter($c - 1));
     }
 
-    protected function resolvLetter($index): string
+    protected function resolveLetter($index): string
     {
         $count = count($this->letters);
+
+        if (0 > $index) {
+            $index = 0;
+        }
 
         if ($count > $index) {
             return $this->letters[$index];
@@ -49,7 +53,7 @@ class MillennialHelper
             $index -= $count;
         } while ($count < $index);
 
-        $string = $this->resolvLetter($i - 1).$this->letters[$index];
+        $string = $this->resolveLetter($i - 1).$this->letters[$index];
 
         if (2 < strlen($string)) {
             $string = sprintf('%s/%s', substr($string, 0, 2), substr($string, -2));

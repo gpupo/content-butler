@@ -30,7 +30,12 @@ use Symfony\Component\Finder\SplFileInfo;
 abstract class AbstractCommand extends Command
 {
     protected $documentManager;
+
     protected $documentHelper;
+
+    protected $iteration = 0;
+
+    protected $overshadow;
 
     protected function configure()
     {
@@ -42,6 +47,13 @@ abstract class AbstractCommand extends Command
                 InputOption::VALUE_REQUIRED,
                 'String to split root path',
                 'jcr_root'
+            )
+            ->addOption(
+                'overshadow',
+                'o',
+                InputOption::VALUE_REQUIRED,
+                'Overshadow filename',
+                false
             );
     }
 
@@ -56,11 +68,12 @@ abstract class AbstractCommand extends Command
         }
 
         $this->documentManager = $this->getHelper('phpcr')->getDocumentManager();
-        $splitter = $input->getOption('splitter');
-        $this->documentHelper = new DocumentHelper($this->documentManager, $splitter);
+        $this->overshadow = $input->getOption('overshadow');
+        $this->documentHelper = new DocumentHelper($this->documentManager, $input->getOption('splitter'));
 
         foreach ($finder as $fileInfo) {
             try {
+                ++$this->iteration;
                 $this->persistDocument($fileInfo, $output);
             } catch (\Exception $e) {
                 $output->writeln(sprintf('<error>%s</>', $e->getMessage()));
@@ -71,6 +84,11 @@ abstract class AbstractCommand extends Command
     protected function persistDocument(SplFileInfo $fileInfo, $output): void
     {
         $document = $this->factoryDocument($fileInfo);
+
+        if ($this->documentManager->find(null, $document->getEndpoint())) {
+            throw new \Exception(sprintf('Node %s already exists', $document->getEndpoint()));
+        }
+
         $output->writeln(sprintf('Saving node <info>%s</>', $document->getEndpoint()));
         $this->documentManager->persist($document);
         $this->documentManager->flush();
@@ -79,10 +97,6 @@ abstract class AbstractCommand extends Command
     protected function factoryDocument($fileInfo): Document
     {
         $document = $this->documentHelper->factoryDocument($fileInfo);
-
-        if ($this->documentManager->find(null, $document->getEndpoint())) {
-            throw new \Exception(sprintf('Node %s already exists', $document->getEndpoint()));
-        }
 
         return $document;
     }
