@@ -2,6 +2,9 @@
 
 Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
+[![Paypal Donations](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WAQKVZJRG5AUJ&item_name=content-butler)
+
+
 ## Requirements
 
 * Docker Compose
@@ -99,3 +102,33 @@ Nginx frontend
 1. Check if you keep seen [sheeps](http://localhost/fixture/extra/photos/sheep-3562868-pixabay.jpg)
 1. Check if you can seen [litle sheeps](http://localhost/img/100x100/fixture/extra/photos/sheep-3562868-pixabay.jpg)
 1. Browse [default repository](http://localhost/repository/default)
+
+## Library usage
+
+### Install
+
+	composer require gpupo/content-butler
+
+### Add Documents
+
+Versionable, Overshadow and Millenial Tree:
+
+```php
+//...
+use Gpupo\ContentButler\Helpers\DocumentHelper;
+$documentHelper = new DocumentHelper($this->documentManager, $spliter = 'Resources', $versionable = true);
+$document = $documentHelper->factoryDocument('var/file/path.jpg', 8068, true);
+
+if ($this->documentManager->find(null, $document->getEndpoint())) {
+    throw new \Exception(sprintf('Node %s already exists', $document->getEndpoint()));
+}
+
+$output->writeln(sprintf('Saving node <info>%s</>', $document->getEndpoint()));
+$this->documentManager->persist($document);
+$this->documentManager->flush();
+```
+
+## Links
+
+
+See [Jackalope Jackrabbit by example](https://github.com/gpupo/jackalope-jackrabbit-by-example) and [content-butler](https://github.com/gpupo/content-butler)

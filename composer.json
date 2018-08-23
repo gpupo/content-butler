@@ -1,5 +1,5 @@
 {
-    "name": "gpupo/common",
+    "name": "gpupo/content-butler",
     "description": "Content server with PHPCR, Apache Jackrabbit (backend) and Nginx proxy (frontend)",
     "homepage": "https://opensource.gpupo.com/content-butler/",
     "authors": [
