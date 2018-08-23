@@ -15,22 +15,22 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\ContentButler\Tests\Helper;
+namespace Gpupo\ContentButler\Tests\Helpers;
 
-use Gpupo\ContentButler\Helper\Node;
+use Gpupo\ContentButler\Helpers\NodeHelper;
 use Gpupo\ContentButler\Tests\TestCaseAbstract;
 use Doctrine\ODM\PHPCR\Document\Generic;
 /**
  * @coversNothing
  */
-class NodeTest extends TestCaseAbstract
+class NodeHelperTest extends TestCaseAbstract
 {
     /**
          * @dataProvider dataProviderPaths
      */
     public function testGetParentDocument($string)
     {
-        $helper = new Node($this->getHelperSet()->get('phpcr')->getDocumentManager());
+        $helper = new NodeHelper($this->getHelperSet()->get('phpcr')->getDocumentManager());
         $path = $helper->resolvParentDocument($string);
         $this->assertInstanceof(Generic::class, $path);
     }

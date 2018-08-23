@@ -15,12 +15,12 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\ContentButler\Helper;
+namespace Gpupo\ContentButler\Helpers;
 
 use Doctrine\ODM\PHPCR\DocumentManager;
 use Doctrine\ODM\PHPCR\Document\Generic;
 
-class Node
+class NodeHelper
 {
     private $documentManager;
 

@@ -15,15 +15,15 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\ContentButler\Tests\Helper;
+namespace Gpupo\ContentButler\Tests\Helpers;
 
-use Gpupo\ContentButler\Helper\MillennialNode;
+use Gpupo\ContentButler\Helpers\MillennialHelper;
 use Gpupo\ContentButler\Tests\TestCaseAbstract;
 
 /**
  * @coversNothing
  */
-class MillenialNodeTest extends TestCaseAbstract
+class MillenialHelperTest extends TestCaseAbstract
 {
     /**
      * @dataProvider dataProviderNode
@@ -33,7 +33,7 @@ class MillenialNodeTest extends TestCaseAbstract
      */
     public function testCalculate($number, $expected)
     {
-        $helper = new MillennialNode();
+        $helper = new MillennialHelper();
         $string = $helper->calculate($number);
 
         $this->assertSame($expected, $string);

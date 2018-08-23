@@ -25,7 +25,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Gpupo\ContentButler\Helper\Node;
+use Gpupo\ContentButler\Helpers\NodeHelper;
 
 abstract class AbstractCommand extends Command
 {

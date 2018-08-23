@@ -15,9 +15,9 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\ContentButler\Helper;
+namespace Gpupo\ContentButler\Helpers;
 
-class MillennialNode
+class MillennialHelper
 {
     protected $letters;
 
