@@ -31,6 +31,7 @@ $cli->setCatchExceptions(true);
 $cli->setHelperSet($helperSet);
 $cli->addCommands(array(
     new \Gpupo\ContentButler\Command\Import\DirectoryCommand(),
+    new \Gpupo\ContentButler\Command\Import\MillenialCommand(),
     new \PHPCR\Util\Console\Command\NodeDumpCommand(),
     new \PHPCR\Util\Console\Command\NodeMoveCommand(),
     new \PHPCR\Util\Console\Command\NodeRemoveCommand(),

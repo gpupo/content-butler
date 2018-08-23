@@ -1,6 +1,6 @@
 {
     "name": "gpupo/common",
-    "description": "Content Butler",
+    "description": "Content server with PHPCR, Apache Jackrabbit (backend) and Nginx proxy (frontend)",
     "homepage": "https://opensource.gpupo.com/content-butler/",
     "authors": [
         {
@@ -8,7 +8,7 @@
             "email": "contact@gpupo.com"
         }
     ],
-    "keywords": ["content", "jackrabbit"],
+    "keywords": ["content", "jackrabbit", "PHPCR"],
     "license": "Apache 2.0",
     "require": {
         "php": "^7.2",
@@ -25,7 +25,7 @@
     "autoload": {
         "psr-4": {
             "Gpupo\\ContentButler\\": "src",
-            "Gpupo\\Tests\\ContentButler\\": "tests"
+            "Gpupo\\ContentButler\\Tests\\": "tests"
         }
     },
     "require-dev": {

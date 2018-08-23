@@ -25,10 +25,8 @@ Copy config files (and customize)
 
 Set passwords: default user is admin with admin password. You must edit htpasswd file with new values and that [generator](http://www.htaccesstools.com/htpasswd-generator/) is a usefull tool.
 
-
 Create docker volume and machines
 
-    docker volume create jackrabbit-storage; #optional
     docker-compose up --no-start;
 
 Install dependencies

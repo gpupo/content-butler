@@ -15,28 +15,13 @@ declare(strict_types=1);
  *
  */
 
-namespace Gpupo\ContentButler\Document;
+namespace Gpupo\ContentButler\Command\Import;
 
-use Doctrine\ODM\PHPCR\Document\File;
-use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
-
-/**
- * @PHPCR\Document
- */
-class Document extends File
+class MillenialCommand extends AbstractCommand
 {
-    /**
-     * @PHPCR\Field(type="string", nullable=true)
-     */
-    protected $title;
-
-    public function setTitle($title)
+    protected function configure()
     {
-        $this->title = $title;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
+        parent::configure();
+        $this->setName('butler:import:millenial')->setDescription('Put directory files to repository with millenial node paths');
     }
 }
