@@ -49,6 +49,13 @@ abstract class AbstractCommand extends Command
                 'jcr_root'
             )
             ->addOption(
+                'versionable',
+                'b',
+                InputOption::VALUE_REQUIRED,
+                'Use versionable Documents',
+                false
+            )
+            ->addOption(
                 'overshadow',
                 'o',
                 InputOption::VALUE_REQUIRED,
@@ -69,7 +76,7 @@ abstract class AbstractCommand extends Command
 
         $this->documentManager = $this->getHelper('phpcr')->getDocumentManager();
         $this->overshadow = $input->getOption('overshadow');
-        $this->documentHelper = new DocumentHelper($this->documentManager, $input->getOption('splitter'));
+        $this->documentHelper = new DocumentHelper($this->documentManager, $input->getOption('splitter'), $input->getOption('versionable'));
 
         foreach ($finder as $fileInfo) {
             try {

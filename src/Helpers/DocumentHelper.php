@@ -55,10 +55,10 @@ class DocumentHelper
     {
         $parent = $this->folderHelper->resolvParentDocument($fileData['parent']);
 
-        if (true === $this->versionable) {
-            $file = new DocumentVersionable();
-        } else {
+        if (empty($this->versionable)) {
             $file = new Document();
+        } else {
+            $file = new DocumentVersionable();
         }
 
         $file->setFileContentFromFilesystem($fileData['path']);
