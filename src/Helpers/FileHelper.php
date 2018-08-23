@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace Gpupo\ContentButler\Helpers;
 
 use Doctrine\ODM\PHPCR\DocumentManager;
-use Doctrine\ODM\PHPCR\Document\Generic;
 use Gpupo\ContentButler\Document\Document;
+use Gpupo\ContentButler\Document\DocumentVersionable;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
@@ -32,16 +32,23 @@ class FileHelper
 
     protected $splitter;
 
-    public function __construct(DocumentManager $documentManager, string $splitter = './')
+    protected $versionable;
+
+    public function __construct(DocumentManager $documentManager, string $splitter = './', $versionable = false)
     {
         $this->documentManager = $documentManager;
-        $this->nodeHelper = new NodeHelper($this->documentManager);
+        $this->nodeHelper = new FolderHelper($this->documentManager);
         $this->splitter = $splitter;
+        $this->versionable = $versionable;
     }
 
-    public function factoryDocumentFromPath(string $path)
+    public function factoryDocument($fileInfo): Document
     {
-        $data = $this->resolveFileData($this->factoryFileInfo($path));
+        if (!$fileInfo instanceof SplFileInfo){
+            $fileInfo = $this->factoryFileInfo($fileInfo);
+        }
+
+        $data = $this->resolveFileData($fileInfo);
 
         return $this->factoryDocumentFromFileData($data);
     }
@@ -49,7 +56,13 @@ class FileHelper
     public function factoryDocumentFromFileData(array $fileData): Document
     {
         $parent = $this->nodeHelper->resolvParentDocument($fileData['parent']);
-        $file = new Document();
+
+        if (true === $this->versionable) {
+            $file = new DocumentVersionable();
+        } else {
+            $file = new Document();
+        }
+
         $file->setFileContentFromFilesystem($fileData['path']);
         $file->setNodename($fileData['name']);
         $file->setParentDocument($parent);

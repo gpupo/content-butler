@@ -25,12 +25,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Gpupo\ContentButler\Helpers\NodeHelper;
+use Gpupo\ContentButler\Helpers\FolderHelper;
+use Gpupo\ContentButler\Helpers\FileHelper;
 
 abstract class AbstractCommand extends Command
 {
     protected $documentManager;
-    protected $splitter;
+    protected $fileHelper;
 
     protected function configure()
     {
@@ -56,7 +57,8 @@ abstract class AbstractCommand extends Command
         }
 
         $this->documentManager = $this->getHelper('phpcr')->getDocumentManager();
-        $this->splitter = $input->getOption('splitter');
+        $splitter = $input->getOption('splitter');
+        $this->fileHelper = new FileHelper($this->documentManager, $splitter);
 
         foreach ($finder as $fileInfo) {
             try {
@@ -67,21 +69,16 @@ abstract class AbstractCommand extends Command
         }
     }
 
-
     protected function saveFile(SplFileInfo $fileInfo, $output): void
     {
-        $node = $this->resolveNodePath($fileInfo);
+        $document = $this->fileHelper->factoryDocument($fileInfo);
 
-        if ($this->documentManager->find(null, $node['full'])) {
-            $output->writeln(sprintf('Node <error>%s</> already exists', $node['full']));
+        if ($this->documentManager->find(null, $document->getEndpoint())) {
+            throw new \Exception(sprintf('Node %s already exists', $document->getEndpoint()));
         } else {
-            $output->writeln(sprintf('Saving node <info>%s</>', $node['full']));
-
-            $file = $this->factoryFile($node);
-            $this->documentManager->persist($file);
+            $output->writeln(sprintf('Saving node <info>%s</>', $document->getEndpoint()));
+            $this->documentManager->persist($document);
             $this->documentManager->flush();
         }
     }
-
-
 }

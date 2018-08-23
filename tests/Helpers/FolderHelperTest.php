@@ -17,22 +17,23 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Tests\Helpers;
 
-use Gpupo\ContentButler\Helpers\NodeHelper;
+use Gpupo\ContentButler\Helpers\FolderHelper;
 use Gpupo\ContentButler\Tests\TestCaseAbstract;
-use Doctrine\ODM\PHPCR\Document\Generic;
+use Gpupo\ContentButler\Document\Folder;
+
 /**
  * @coversNothing
  */
-class NodeHelperTest extends TestCaseAbstract
+class FolderHelperTest extends TestCaseAbstract
 {
     /**
          * @dataProvider dataProviderPaths
      */
     public function testGetParentDocument($string)
     {
-        $helper = new NodeHelper($this->getHelperSet()->get('phpcr')->getDocumentManager());
+        $helper = new FolderHelper($this->getHelperSet()->get('phpcr')->getDocumentManager());
         $path = $helper->resolvParentDocument($string);
-        $this->assertInstanceof(Generic::class, $path);
+        $this->assertInstanceof(Folder::class, $path);
     }
 
     public function dataProviderPaths()

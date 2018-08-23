@@ -48,7 +48,7 @@ class FileHelperTest extends TestCaseAbstract
     public function testSaveDocument($string)
     {
         $helper = new FileHelper($this->getHelperSet()->get('phpcr')->getDocumentManager(), 'Resources');
-        $document = $helper->factoryDocumentFromPath($string);
+        $document = $helper->factoryDocument($string);
         $this->assertInstanceof(Document::class, $document);
     }
 

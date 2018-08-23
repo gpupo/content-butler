@@ -17,29 +17,11 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Document;
 
-use Doctrine\ODM\PHPCR\Document\File;
-use Doctrine\ODM\PHPCR\Mapping\Annotations as PHPCR;
+use Doctrine\ODM\PHPCR\HierarchyInterface as Core;
 
-/**
- * @PHPCR\Document
- */
-class Document extends File implements HierarchyInterface
+interface HierarchyInterface extends Core
 {
-    use HierarchyTrait;
-
-    /**
-     * @PHPCR\Field(type="string", nullable=true)
-     */
-    protected $title;
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
+    public function getEndpoint();
+    
+    public function toArray();
 }

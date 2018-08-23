@@ -18,9 +18,9 @@ declare(strict_types=1);
 namespace Gpupo\ContentButler\Helpers;
 
 use Doctrine\ODM\PHPCR\DocumentManager;
-use Doctrine\ODM\PHPCR\Document\Generic;
+use Gpupo\ContentButler\Document\Folder;
 
-class NodeHelper
+class FolderHelper
 {
     private $documentManager;
 
@@ -29,7 +29,7 @@ class NodeHelper
         $this->documentManager = $documentManager;
     }
 
-    public function createParentDocument(string $path, bool $recursive = true): Generic
+    public function createParentDocument(string $path, bool $recursive = true): Folder
     {
         $nx = explode('/', $path);
         $list = ['path' => $path];
@@ -38,7 +38,7 @@ class NodeHelper
 
         $parent = $this->resolvParentDocument($list['parent']);
 
-        $generic = new Generic();
+        $generic = new Folder();
         $generic->setNodename($list['name']);
         $generic->setParentDocument($parent);
         $this->documentManager->persist($generic);
@@ -48,7 +48,7 @@ class NodeHelper
     }
 
 
-    public function resolvParentDocument(string $path): Generic
+    public function resolvParentDocument(string $path)
     {
         $parent = $this->documentManager->find(null, $path);
 
