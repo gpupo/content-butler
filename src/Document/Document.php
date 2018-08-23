@@ -41,5 +41,4 @@ class Document extends File implements HierarchyInterface
     {
         return $this->title;
     }
-
 }

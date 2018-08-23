@@ -22,6 +22,6 @@ use Doctrine\ODM\PHPCR\HierarchyInterface as Core;
 interface HierarchyInterface extends Core
 {
     public function getEndpoint();
-    
+
     public function toArray();
 }

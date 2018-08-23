@@ -17,9 +17,9 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Tests\Helpers;
 
+use Gpupo\ContentButler\Document\Folder;
 use Gpupo\ContentButler\Helpers\FolderHelper;
 use Gpupo\ContentButler\Tests\TestCaseAbstract;
-use Gpupo\ContentButler\Document\Folder;
 
 /**
  * @coversNothing
@@ -27,7 +27,9 @@ use Gpupo\ContentButler\Document\Folder;
 class FolderHelperTest extends TestCaseAbstract
 {
     /**
-         * @dataProvider dataProviderPaths
+     * @dataProvider dataProviderPaths
+     *
+     * @param mixed $string
      */
     public function testGetParentDocument($string)
     {

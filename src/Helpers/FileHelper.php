@@ -21,8 +21,6 @@ use Doctrine\ODM\PHPCR\DocumentManager;
 use Gpupo\ContentButler\Document\Document;
 use Gpupo\ContentButler\Document\DocumentVersionable;
 use SplFileInfo;
-use Symfony\Component\Finder\Finder;
-
 
 class FileHelper
 {
@@ -44,7 +42,7 @@ class FileHelper
 
     public function factoryDocument($fileInfo): Document
     {
-        if (!$fileInfo instanceof SplFileInfo){
+        if (!$fileInfo instanceof SplFileInfo) {
             $fileInfo = $this->factoryFileInfo($fileInfo);
         }
 

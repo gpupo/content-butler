@@ -17,11 +17,11 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Tests\Helpers;
 
+use Gpupo\ContentButler\Document\Document;
 use Gpupo\ContentButler\Helpers\FileHelper;
 use Gpupo\ContentButler\Tests\TestCaseAbstract;
-use Gpupo\ContentButler\Document\Document;
-use Symfony\Component\Finder\Finder;
 use SplFileInfo;
+use Symfony\Component\Finder\Finder;
 
 /**
  * @coversNothing
@@ -30,6 +30,8 @@ class FileHelperTest extends TestCaseAbstract
 {
     /**
      * @dataProvider dataProviderPaths
+     *
+     * @param mixed $string
      */
     public function testFactoryDocument($string, SplFileInfo $expectedFileInfo)
     {
@@ -44,6 +46,8 @@ class FileHelperTest extends TestCaseAbstract
 
     /**
      * @dataProvider dataProviderPaths
+     *
+     * @param mixed $string
      */
     public function testSaveDocument($string)
     {

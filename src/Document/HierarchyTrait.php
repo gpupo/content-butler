@@ -19,6 +19,20 @@ namespace Gpupo\ContentButler\Document;
 
 trait HierarchyTrait
 {
+    public function getEndpoint()
+    {
+        return sprintf('%s/%s', $this->resolveEndpointObject($this->getParentDocument()), $this->getNodename());
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'nodeName' => $this->getNodename(),
+            'endpoint' => $this->getEndpoint(),
+        ];
+    }
+
     protected function resolveEndpointObject($object)
     {
         if ($object instanceof HierarchyInterface) {
@@ -33,19 +47,5 @@ trait HierarchyTrait
         }
 
         return implode('/', $nodes);
-    }
-
-    public function getEndpoint()
-    {
-        return sprintf('%s/%s', $this->resolveEndpointObject($this->getParentDocument()), $this->getNodename());
-    }
-
-    public function toArray()
-    {
-        return [
-            'id'    => $this->getId(),
-            'nodeName' => $this->getNodename(),
-            'endpoint'  => $this->getEndpoint(),
-        ];
     }
 }

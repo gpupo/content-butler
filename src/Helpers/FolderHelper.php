@@ -47,7 +47,6 @@ class FolderHelper
         return $generic;
     }
 
-
     public function resolvParentDocument(string $path)
     {
         $parent = $this->documentManager->find(null, $path);
@@ -58,5 +57,4 @@ class FolderHelper
 
         return $parent;
     }
-
 }

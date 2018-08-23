@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Command\Import;
 
-use Gpupo\ContentButler\Document\Document;
+use Gpupo\ContentButler\Helpers\FileHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,8 +25,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Gpupo\ContentButler\Helpers\FolderHelper;
-use Gpupo\ContentButler\Helpers\FileHelper;
 
 abstract class AbstractCommand extends Command
 {
@@ -75,10 +73,9 @@ abstract class AbstractCommand extends Command
 
         if ($this->documentManager->find(null, $document->getEndpoint())) {
             throw new \Exception(sprintf('Node %s already exists', $document->getEndpoint()));
-        } else {
-            $output->writeln(sprintf('Saving node <info>%s</>', $document->getEndpoint()));
-            $this->documentManager->persist($document);
-            $this->documentManager->flush();
         }
+        $output->writeln(sprintf('Saving node <info>%s</>', $document->getEndpoint()));
+        $this->documentManager->persist($document);
+        $this->documentManager->flush();
     }
 }

@@ -17,10 +17,9 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Tests;
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Helper\HelperSet;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-
 
 abstract class TestCaseAbstract extends TestCase
 {
@@ -28,12 +27,11 @@ abstract class TestCaseAbstract extends TestCase
 
     public function getHelperSet(): Helperset
     {
-
         if (empty($this->helperSet)) {
             $path = getcwd().'/vendor/autoload.php';
             $autoload = @include $path;
 
-            AnnotationRegistry::registerLoader(array($autoload, 'loadClass'));
+            AnnotationRegistry::registerLoader([$autoload, 'loadClass']);
 
             require getcwd().'/bin/cli-config.php';
             $this->helperSet = $helperSet;
