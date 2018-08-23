@@ -31,7 +31,6 @@ abstract class AbstractCommand extends Command
 {
     protected $documentManager;
     protected $splitter;
-    protected $nodeHelper;
 
     protected function configure()
     {
@@ -58,7 +57,6 @@ abstract class AbstractCommand extends Command
 
         $this->documentManager = $this->getHelper('phpcr')->getDocumentManager();
         $this->splitter = $input->getOption('splitter');
-        $this->nodeHelper = new Node($this->documentManager);
 
         foreach ($finder as $fileInfo) {
             try {
@@ -68,6 +66,7 @@ abstract class AbstractCommand extends Command
             }
         }
     }
+
 
     protected function saveFile(SplFileInfo $fileInfo, $output): void
     {
@@ -84,29 +83,5 @@ abstract class AbstractCommand extends Command
         }
     }
 
-    protected function factoryFile(array $node): Document
-    {
-        $parent = $this->nodeHelper->resolvParentDocument($node['parent']);
-        $file = new Document();
-        $file->setFileContentFromFilesystem($node['real']);
-        $file->setNodename($node['name']);
-        $file->setParentDocument($parent);
 
-        return $file;
-    }
-
-    protected function resolveNodePath(SplFileInfo $fileInfo): array
-    {
-        $list = [
-            'real' => $fileInfo->getRealPath(),
-        ];
-        $fx = explode($this->splitter, $fileInfo->getRealPath());
-        $list['full'] = end($fx);
-        $list['relative'] = $fileInfo->getRelativePathname();
-        $nx = explode('/', $list['full']);
-        $list['name'] = array_pop($nx);
-        $list['parent'] = implode('/', $nx);
-
-        return $list;
-    }
 }
