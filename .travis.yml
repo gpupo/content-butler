@@ -26,7 +26,7 @@ before_install:
 before_script:
   - composer self-update
   - composer install --prefer-dist
-  - cp docker-compose.dist.yml docker-compose.yml && cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
+  - cp docker-compose.dist.yml docker-compose.yml && cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf && cp .env.dist .env
   - echo 'JACKRABBIT_SERVER=localhost' >> .env
   - docker-compose up -d
   - docker-compose run php bin/console doctrine:phpcr:register-system-node-types

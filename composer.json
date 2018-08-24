@@ -24,7 +24,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Gpupo\\ContentButler\\": "src",
+            "Gpupo\\ContentButler\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Gpupo\\ContentButler\\Tests\\": "tests"
         }
     },
