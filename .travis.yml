@@ -28,8 +28,10 @@ before_script:
   - composer install --prefer-dist
   - cp docker-compose.dist.yml docker-compose.yml && cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
   - docker-compose up -d
-  - docker-compose run php bin/console doctrine:phpcr:register-system-node-types;
-  - docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
+  - docker-compose run php bin/console doctrine:phpcr:register-system-node-types
+  - docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
+
 script: vendor/bin/phpunit
+
 notifications:
   email: false
