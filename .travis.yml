@@ -1,0 +1,35 @@
+# @see https://docs.travis-ci.com/user/docker/
+sudo: required
+env:
+  DOCKER_COMPOSE_VERSION: 1.21.2
+language: php
+os:
+  - linux
+php:
+  - 7.2
+services:
+  - docker
+
+before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y install docker-ce
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose -v
+  - docker -v
+  - sudo service mysql stop
+
+before_script:
+  - composer self-update
+  - composer install --prefer-dist
+  - cp docker-compose.dist.yml docker-compose.yml && cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
+  - docker-compose up -d
+  - docker-compose run php bin/console doctrine:phpcr:register-system-node-types;
+  - docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources;
+script: vendor/bin/phpunit
+notifications:
+  email: false
