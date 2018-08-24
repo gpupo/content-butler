@@ -3,6 +3,14 @@ VERSION 1  CONTENT REPOSITORY WITH APACHE JACKRABBIT AND WEBPAGE SERVER WITH IMA
 =========================================================================================
 
    Version 1.1 - Add Helpers
+      24/08/2018 15:45  1.1.3  Travis OK
+         1b6309c Move set server
+         3ddee92 Add .env
+         74340b7 Add env
+         61df3d6 Format
+         19e51ce Add travis
+         e3a2cbe Merge branch 'master' of github.com:gpupo/content-butler
+         018f9a6 Delete LICENSE
       24/08/2018 14:26  1.1.2  Resize PNG
          0db7a96 Fix license
       23/08/2018 16:15  1.1.1  Fix project name

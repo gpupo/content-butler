@@ -4,10 +4,12 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 [![Paypal Donations](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WAQKVZJRG5AUJ&item_name=content-butler)
 
+[![Build Status](https://secure.travis-ci.org/gpupo/content-butler.png?branch=master)](http://travis-ci.org/gpupo/content-butler)
 
 ## Requirements
 
-* Docker Compose
+* PHP >= *7.2*
+* [Composer Dependency Manager](http://getcomposer.org)
 
 ## Features
 
