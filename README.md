@@ -133,4 +133,7 @@ $this->documentManager->flush();
 ## Links
 
 
-See [Jackalope Jackrabbit by example](https://github.com/gpupo/jackalope-jackrabbit-by-example) and [content-butler](https://github.com/gpupo/content-butler)
+See
+* [Jackalope Jackrabbit by example](https://github.com/gpupo/jackalope-jackrabbit-by-example)
+* [content-repository-server](https://github.com/gpupo/content-repository-server)
+* [content-butler](https://github.com/gpupo/content-butler)

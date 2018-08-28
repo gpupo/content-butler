@@ -3,6 +3,8 @@ VERSION 1  CONTENT REPOSITORY WITH APACHE JACKRABBIT AND WEBPAGE SERVER WITH IMA
 =========================================================================================
 
    Version 1.1 - Add Helpers
+      28/08/2018 10:00  1.1.4  Fix 209 bug
+         a3ea237 Fix 209 bug
       24/08/2018 15:45  1.1.3  Travis OK
          1b6309c Move set server
          3ddee92 Add .env
