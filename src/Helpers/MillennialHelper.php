@@ -51,7 +51,7 @@ class MillennialHelper
         do {
             ++$i;
             $index -= $count;
-        } while ($count < $index);
+        } while ($count <= $index);
 
         $string = $this->resolveLetter($i - 1).$this->letters[$index];
 
