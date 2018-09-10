@@ -10,6 +10,7 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 * PHP >= *7.2*
 * [Composer Dependency Manager](http://getcomposer.org)
+* Docker compose
 
 ## Features
 
@@ -24,7 +25,7 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 Copy config files (and customize)
 
     cp .env.dist .env; #optional
-    cp docker-compose.dist.yml docker-compose.yml
+    cp Resources/docker-compose.prod.yml docker-compose.yml
     cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
 
 
