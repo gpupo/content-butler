@@ -24,11 +24,11 @@ before_install:
   - sudo service mysql stop
 
 before_script:
-  - composer self-update
-  - composer install --prefer-dist
   - cp Resources/docker-compose.prod.yaml docker-compose.yaml && cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf && cp .env.dist .env
   - echo 'JACKRABBIT_SERVER=localhost' >> .env
   - docker-compose up -d
+  - composer self-update
+  - composer install --prefer-dist
   - docker-compose run php bin/console doctrine:phpcr:register-system-node-types
   - docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
 
