@@ -30,6 +30,7 @@ before_script:
   - composer install --prefer-dist
   - docker-compose run php bin/console doctrine:phpcr:register-system-node-types
   - docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
+  - echo 'JACKRABBIT_SERVER=localhost' >> .env
 
 script: vendor/bin/phpunit
 
