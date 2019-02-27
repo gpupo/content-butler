@@ -16,11 +16,16 @@ declare(strict_types=1);
  */
 
 use Symfony\Component\Dotenv\Dotenv;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
-require __DIR__.'/../vendor/autoload.php';
+$autoload = include_once __DIR__.'/../vendor/autoload.php';
 
 if (!class_exists(Dotenv::class)) {
     throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
 }
 // load all the .env files
 (new Dotenv())->loadEnv(dirname(__DIR__).'/.env');
+
+AnnotationRegistry::registerLoader(array($autoload, 'loadClass'));
+
+return $autoload;

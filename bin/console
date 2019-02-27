@@ -10,11 +10,6 @@
  */
 
 namespace Gpupo\ContentButler\Console;
-require_once './config/bootstrap.php';
-
-use Doctrine\Common\Annotations\AnnotationRegistry;
-
-AnnotationRegistry::registerLoader(array($autoload, 'loadClass'));
 
 require getcwd() . DIRECTORY_SEPARATOR . 'bin/cli-config.php';
 

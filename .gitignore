@@ -2,6 +2,7 @@ var/*
 vendor/*
 *.lock
 .php_cs.cache
-docker-compose.yml
+docker-compose*
 .env
 htpasswd.conf
+/.env.*

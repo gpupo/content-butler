@@ -15,12 +15,11 @@ declare(strict_types=1);
  *
  */
 
-use Symfony\Component\Dotenv\Dotenv;
+namespace Gpupo\ContentButler\Console;
 
-require_once './config/bootstrap.php';
+require  getcwd() . DIRECTORY_SEPARATOR . '/config/bootstrap.php';
 
 $extraCommands = [];
-
 $server = sprintf('http://%s:%d/server/', getenv('JACKRABBIT_SERVER'), getenv('JACKRABBIT_PORT'));
 
 $params = [

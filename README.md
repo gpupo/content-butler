@@ -8,7 +8,7 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 ## Requirements
 
-- PHP >= *7.2*
+- PHP >= *7.3*
 - [Composer Dependency Manager](http://getcomposer.org)
 - [Docker][docker] (1.12+)
 - [Docker-composer][docker-compose] (1.10+)
@@ -22,12 +22,7 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
     git clone git@github.com:gpupo/content-butler.git;
     cd content-butler;
-
-Copy config files (and customize)
-
-    cp .env.dist .env; #optional
-    cp Resources/docker-compose.prod.yml docker-compose.yml
-    cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
+	make setup;
 
 
 Set passwords: default user is admin with admin password. You must edit htpasswd file with new values and that [generator](http://www.htaccesstools.com/htpasswd-generator/) is a usefull tool.

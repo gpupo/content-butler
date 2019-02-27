@@ -58,7 +58,7 @@ restart: stop start
 ## Setup, install and run with fixtures
 demo: setup start
 demo:
-    $(DC) run --rm php-fpm make fixtures
+	$(DC) run --rm php-fpm make fixtures
 
 
 ## Backup current files
