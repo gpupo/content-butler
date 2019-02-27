@@ -28,11 +28,10 @@ services:
         networks:
             - default
             - backend
-    php:
+    php-fpm:
         image: gpupo/container-orchestration:php-dev
         volumes:
           - $PWD/:/var/www/app
-        command: echo "byes"
         links:
           - content-server
         networks:

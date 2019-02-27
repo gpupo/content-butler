@@ -38,6 +38,7 @@ install:
 	./bin/console doctrine:phpcr:register-system-node-types
 
 ## Load fixtures
+fixtures: setup install
 fixtures:
 	./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
 
@@ -52,9 +53,13 @@ stop:
 	printf "${COLOR_COMMENT}Web server stoped.${COLOR_RESET}\n"
 
 ## Restart the webserver
-restart:
-	$(MAKE) stop;
-	$(MAKE) start;
+restart: stop start
+
+## Setup, install and run with fixtures
+demo: setup start
+demo:
+    $(DC) run --rm php-fpm make fixtures
+
 
 ## Backup current files
 backup:

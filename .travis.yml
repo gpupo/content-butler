@@ -24,10 +24,7 @@ before_install:
   - sudo service mysql stop
 
 before_script:
-  - make setup;
-  - make start
-  - make install
-  - make fixture
+  - make demo;
   - echo 'JACKRABBIT_SERVER=localhost' >> .env.test
 
 script: APP_ENV=test vendor/bin/phpunit
