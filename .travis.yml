@@ -25,15 +25,12 @@ before_install:
 
 before_script:
   - make setup;
-    cp Resources/docker-compose.prod.yaml docker-compose.yaml && cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
   - make start
-  - composer self-update
-  - composer install --prefer-dist
-  - docker-compose run php bin/console doctrine:phpcr:register-system-node-types
-  - docker-compose run php ./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
-  - echo 'JACKRABBIT_SERVER=localhost' >> .env
+  - make install
+  - make fixture
+  - echo 'JACKRABBIT_SERVER=localhost' >> .env.test
 
-script: vendor/bin/phpunit
+script: APP_ENV=test vendor/bin/phpunit
 
 notifications:
   email: false

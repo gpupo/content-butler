@@ -17,13 +17,7 @@ declare(strict_types=1);
 
 use Symfony\Component\Dotenv\Dotenv;
 
-$dotenv = new Dotenv();
-$envfile = __DIR__.'/../.env';
-if (file_exists($envfile)) {
-    $dotenv->load($envfile);
-} else {
-    $dotenv->load($envfile.'.dist');
-}
+require_once './config/bootstrap.php';
 
 $extraCommands = [];
 

@@ -28,9 +28,18 @@ help:
 setup:
 	touch .env.local
 	touch .env.prod
-    [[ -f ./config/nginx/htpasswd.conf ]] || cp Resources/htpasswd.conf config/nginx/htpasswd.conf;
-    [[ -f docker-compose.yaml ]] || cp Resources/docker-compose.yaml docker-compose.yaml;
+	[[ -f ./config/nginx/htpasswd.conf ]] || cp Resources/htpasswd.conf config/nginx/htpasswd.conf;
+	[[ -f docker-compose.yaml ]] || cp Resources/docker-compose.yaml docker-compose.yaml;
 	printf "${COLOR_COMMENT}Setup Done.${COLOR_RESET}\n"
+
+## Install PHP libs
+install:
+	composer self-update && composer install --prefer-dist
+	./bin/console doctrine:phpcr:register-system-node-types
+
+## Load fixtures
+fixtures:
+	./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
 
 ## Start the webserver
 start:

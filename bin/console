@@ -1,24 +1,16 @@
 #!/usr/bin/env php
 <?php
 
-$up = DIRECTORY_SEPARATOR . '..';
-$file = DIRECTORY_SEPARATOR . 'autoload.php';
-$candiates = array(
-    __DIR__ . $up . $file,
-    __DIR__ . $up . DIRECTORY_SEPARATOR . 'vendor' . $file,
-    __DIR__ . $up . $up . $up . $file,
-);
+/*
+ * This file is part of gpupo/content-butler
+ * Created by Gilmar Pupo <contact@gpupo.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ * For more information, see <https://opensource.gpupo.com/>.
+ */
 
-foreach ($candiates as $path) {
-    $autoload = @include_once $path;
-    if ($autoload) {
-        break;
-    }
-}
-
-if (!$autoload) {
-    throw new RuntimeException('Install dependencies to run the console.');
-}
+namespace Gpupo\ContentButler\Console;
+require_once './config/bootstrap.php';
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
