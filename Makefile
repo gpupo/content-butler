@@ -30,6 +30,7 @@ setup:
 	touch .env.prod
 	[[ -f ./config/nginx/htpasswd.conf ]] || cp Resources/htpasswd.conf config/nginx/htpasswd.conf;
 	[[ -f docker-compose.yaml ]] || cp Resources/docker-compose.yaml docker-compose.yaml;
+	$(DCC) up --no-start;
 	printf "${COLOR_COMMENT}Setup Done.${COLOR_RESET}\n"
 
 ## Install PHP libs

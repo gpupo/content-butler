@@ -27,13 +27,10 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 Set passwords: default user is admin with admin password. You must edit htpasswd file with new values and that [generator](http://www.htaccesstools.com/htpasswd-generator/) is a usefull tool.
 
-Create docker volume and machines
-
-    docker-compose up --no-start;
 
 Install dependencies
 
-    docker-compose run php composer install
+    make install
 
 Copy files to machines (optional)
 
@@ -45,9 +42,9 @@ If previous repository exists (see backup):
     docker cp var/opt/jackrabbit/workspaces "$(docker-compose ps -q content-server)":/opt/jackrabbit/;
     docker cp var/opt/jackrabbit/version "$(docker-compose ps -q content-server)":/opt/jackrabbit/;
 
-Up docker services
+Up services
 
-    docker-compose up -d;
+    make start
 
 Register node types
 
@@ -98,9 +95,9 @@ Content Repository
 
 Nginx frontend
 
-1. Check if you keep seen [sheeps](http://localhost/fixture/extra/photos/sheep-3562868-pixabay.jpg)
-1. Check if you can seen [litle sheeps](http://localhost/img/100x100/fixture/extra/photos/sheep-3562868-pixabay.jpg)
-1. Browse [default repository](http://localhost/repository/default)
+1. Check if you keep seen [sheeps](http://static.localhost/fixture/extra/photos/sheep-3562868-pixabay.jpg)
+1. Check if you can seen [litle sheeps](http://static.localhost/img/100x100/fixture/extra/photos/sheep-3562868-pixabay.jpg)
+1. Browse [default repository](http://static.localhost/repository/default)
 
 ## Library usage
 
