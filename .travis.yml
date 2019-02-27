@@ -24,8 +24,9 @@ before_install:
   - sudo service mysql stop
 
 before_script:
-  - cp Resources/docker-compose.prod.yaml docker-compose.yaml && cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf && cp .env.dist .env
-  - docker-compose up -d
+  - make setup;
+    cp Resources/docker-compose.prod.yaml docker-compose.yaml && cp config/nginx/htpasswd.dist.conf config/nginx/htpasswd.conf
+  - make start
   - composer self-update
   - composer install --prefer-dist
   - docker-compose run php bin/console doctrine:phpcr:register-system-node-types
