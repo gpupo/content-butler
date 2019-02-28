@@ -3,6 +3,7 @@
 .PHONY: help
 DC=docker-compose
 DCC=$(DC) -f docker-compose.yaml
+TCC=$(DCC) -f Resources/docker-compose-tools.yaml
 ## Colors
 COLOR_RESET   = \033[0m
 COLOR_INFO  = \033[32m
@@ -24,6 +25,23 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
+__header:
+	if [ ! -f /.dockerenv ]; then \
+		printf "\n\n!!! ${COLOR_ERROR}This target is only available for execution inside a container!${COLOR_RESET}\n\n\n"; \
+		$(MAKE) help; \
+		exit 1; \
+	else \
+		printf "\n";\
+	fi;
+
+__bottom:
+	printf "\nTarget ${COLOR_COMMENT}Done!${COLOR_RESET}\n";
+
+## Print system info
+info:
+	$(TCC) config
+	$(TCC) ps
+
 ## Setup environment
 setup:
 	touch .env.local
@@ -36,8 +54,10 @@ setup:
 
 ## Install PHP libs
 install:
+	$(MAKE) __header;
 	composer self-update && composer install --prefer-dist
 	./bin/console doctrine:phpcr:register-system-node-types
+	$(MAKE) __bottom;
 
 ## Load fixtures
 fixtures: install
@@ -51,7 +71,7 @@ start:
 
 ## Stop the webserver
 stop:
-	$(DCC) down;
+	$(TCC) down;
 	printf "${COLOR_COMMENT}Web server stoped.${COLOR_RESET}\n"
 
 ## Restart the webserver
@@ -60,10 +80,15 @@ restart: stop start
 ## Setup, install and run with fixtures
 demo: setup start
 demo:
-	$(DC) run --rm php-fpm make fixtures
+	$(TCC) run --rm php-fpm make fixtures
 
 
 ## Backup current files
-backup:
+backup@opt:
 	docker cp "$(docker-compose ps -q content-server)":/opt/jackrabbit ./var/opt/
+	printf "${COLOR_COMMENT}Backup done.${COLOR_RESET}\n"
+
+## Backup current files
+backup@svn-style:
+	$(TCC) run --rm java bin/clone var/dest_directory;
 	printf "${COLOR_COMMENT}Backup done.${COLOR_RESET}\n"
