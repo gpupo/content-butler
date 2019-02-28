@@ -39,7 +39,7 @@ install:
 	./bin/console doctrine:phpcr:register-system-node-types
 
 ## Load fixtures
-fixtures: setup install
+fixtures: install
 fixtures:
 	./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
 
