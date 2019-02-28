@@ -27,6 +27,7 @@ before_install:
 before_script:
   - make demo;
   - echo 'JACKRABBIT_SERVER=localhost' >> .env.test
+  - curl "http://static.localhost/doc/index.html?foo=$(date)"
 
 script: APP_ENV=test vendor/bin/phpunit
 
