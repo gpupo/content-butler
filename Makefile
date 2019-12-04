@@ -2,8 +2,8 @@
 .SILENT:
 .PHONY: help
 DC=docker-compose
-DCC=$(DC) -f docker-compose.yaml
-TCC=$(DCC) -f Resources/docker-compose-tools.yaml
+STANDARTDC=$(DC) -f docker-compose.yaml
+TOOLSDC=$(STANDARTDC) -f Resources/docker-compose-tools.yaml
 ## Colors
 COLOR_RESET   = \033[0m
 COLOR_INFO  = \033[32m
@@ -39,8 +39,8 @@ __bottom:
 
 ## Print system info
 info:
-	$(TCC) config
-	$(TCC) ps
+	$(TOOLSDC) config
+	$(TOOLSDC) ps
 
 ## Setup environment
 setup:
@@ -49,7 +49,7 @@ setup:
 	[[ -f ./config/nginx/htpasswd.conf ]] || cp Resources/htpasswd.conf config/nginx/htpasswd.conf;
 	[[ -f docker-compose.yaml ]] || cp Resources/docker-compose.yaml docker-compose.yaml;
 	[[ -f .env ]] || cp .env.dist .env;
-	$(DCC) up --no-start;
+	$(STANDARTDC) up --no-start;
 	printf "${COLOR_COMMENT}Setup Done.${COLOR_RESET}\n"
 
 ## Install PHP libs
@@ -66,12 +66,12 @@ fixtures:
 
 ## Start the webserver
 start:
-	$(DCC) up -d content-server nginx;
+	$(STANDARTDC) up -d content-server nginx;
 	printf "${COLOR_COMMENT}Web server started.${COLOR_RESET}\n"
 
 ## Stop the webserver
 stop:
-	$(TCC) down;
+	$(TOOLSDC) down;
 	printf "${COLOR_COMMENT}Web server stoped.${COLOR_RESET}\n"
 
 ## Restart the webserver
@@ -80,7 +80,7 @@ restart: stop start
 ## Setup, install and run with fixtures
 demo: setup start
 demo:
-	$(TCC) run --rm php-fpm make fixtures
+	$(TOOLSDC) run --rm php-fpm make fixtures
 
 
 ## Backup current files
@@ -90,5 +90,5 @@ backup@opt:
 
 ## Backup current files
 backup@svn-style:
-	$(TCC) run --rm java bin/clone var/dest_directory;
+	$(TOOLSDC) run --rm java bin/clone var/dest_directory;
 	printf "${COLOR_COMMENT}Backup done.${COLOR_RESET}\n"
