@@ -25,10 +25,10 @@ before_install:
   - git clone https://github.com/gpupo/httpd-gateway.git && pushd httpd-gateway && make setup && make alone && popd;
 
 before_script:
-  - make demo;
+  - ls Resources
+  - make demo
   - echo 'JACKRABBIT_SERVER=localhost' >> .env.test
   - curl "http://static.localhost/doc/index.html?foo=$(date)"
-  - ls Resources
 
 script: APP_ENV=test vendor/bin/phpunit
 
