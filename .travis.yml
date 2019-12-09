@@ -28,7 +28,8 @@ before_script:
   - ls Resources
   - make demo
   - echo 'JACKRABBIT_SERVER=localhost' >> .env.test
-  - curl --verbose --header "Host: static.localhost" "http://localhost/doc/index.html?foo=$(date +%s)"
+  - sudo cat /etc/hosts
+  # - curl --verbose --header "http://static.localhost/doc/index.html?foo=$(date +%s)"
 
 script: APP_ENV=test vendor/bin/phpunit
 
