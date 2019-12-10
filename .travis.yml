@@ -22,6 +22,7 @@ before_install:
   - docker-compose -v
   - docker -v
   - sudo service mysql stop
+  - sudo -- sh -c "echo 127.0.0.1	static.localhost content-server >> /etc/hosts"
   - git clone https://github.com/gpupo/httpd-gateway.git && pushd httpd-gateway && make setup && make alone && popd;
 
 before_script:
