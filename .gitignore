@@ -7,3 +7,4 @@ docker-compose*
 htpasswd.conf
 /.env.*
 /public/*
+*.cache
