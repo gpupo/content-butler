@@ -26,6 +26,4 @@ if (!class_exists(Dotenv::class)) {
 // load all the .env files
 (new Dotenv(true))->loadEnv(dirname(__DIR__).'/.env');
 
-AnnotationRegistry::registerLoader(array($autoload, 'loadClass'));
-
 return $autoload;
