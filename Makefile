@@ -44,20 +44,25 @@ info:
 
 ## Setup environment
 setup:
-	touch .env.local
-	touch .env.prod
-	[[ -f ./config/nginx/htpasswd.conf ]] || cp Resources/htpasswd.conf config/nginx/htpasswd.conf;
-	[[ -f docker-compose.yaml ]] || cp Resources/docker-compose.yaml docker-compose.yaml;
-	[[ -f .env ]] || cp .env.dist .env;
-	$(STANDARTDC) up --no-start;
+	[[ -f .env.local ]] || echo '#==== local config ====' > .env.local
+	[[ -f .env.prod ]] || echo '#==== prod config ====' > .env.prod
+	[[ -f ./config/nginx/htpasswd.conf ]] || cp Resources/htpasswd.conf config/nginx/htpasswd.conf
+	[[ -f docker-compose.yaml ]] || cp Resources/docker-compose.yaml docker-compose.yaml
+	$(MAKE) build
+	$(STANDARTDC) up --no-start
 	printf "${COLOR_COMMENT}Setup Done.${COLOR_RESET}\n"
+
+## Build dotenv
+build:
+	cat `ls -1 ./.env.* | grep -v test` > ./.env
+	printf "\nDotenv ${COLOR_COMMENT}Done!${COLOR_RESET}\n"
 
 ## Install PHP libs
 install:
-	$(MAKE) __header;
+	$(MAKE) __header
 	composer self-update && composer install --prefer-dist
 	./bin/console doctrine:phpcr:register-system-node-types
-	$(MAKE) __bottom;
+	$(MAKE) __bottom
 
 ## Load fixtures
 fixtures: install
@@ -66,7 +71,7 @@ fixtures:
 
 ## Start the webserver
 start:
-	$(STANDARTDC) up -d content-server nginx;
+	$(STANDARTDC) up -d content-server nginx
 	printf "${COLOR_COMMENT}Web server started.${COLOR_RESET}\n"
 
 ## Stop the webserver
