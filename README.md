@@ -8,7 +8,7 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 ## Requirements
 
-- PHP >= *7.3*
+- git
 - [Composer Dependency Manager](http://getcomposer.org)
 - [Docker][docker] (1.12+)
 - [Docker-composer][docker-compose] (1.10+)
