@@ -24,26 +24,26 @@ services:
             - .env
             - .env.local
         links:
-          - content-server
+            - content-server
         networks:
             - default
             - backend
     php-fpm:
         image: gpupo/container-orchestration:php-dev
         volumes:
-          - $PWD/:/var/www/app
+            - $PWD/:/var/www/app
         links:
-          - content-server
+            - content-server
         networks:
             - backend
     java:
         image: openjdk:slim
         volumes:
-          - $PWD/:/usr/src/myapp
+            - $PWD/:/usr/src/myapp
         command: echo "bye"
         working_dir: /usr/src/myapp
         links:
-          - content-server
+            - content-server
         networks:
             - backend
 volumes:
