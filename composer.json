@@ -14,7 +14,7 @@
         "php": ">=7.4",
         "jackalope/jackalope-jackrabbit": "^1.3",
         "symfony/var-dumper": "^5.0",
-        "doctrine/phpcr-odm": "^1.4.4",
+        "doctrine/phpcr-odm": "^1.4.4|dev-symfony-5",
         "symfony/finder": "^5.0",
         "symfony/dotenv": "^5.0",
         "symfony/console": "^5.0",
@@ -33,8 +33,7 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0",
-        "phan/phan": "^1.0"
+        "gpupo/common-dev": "^5.0"
     },
     "config": {
         "preferred-install": "dist"
