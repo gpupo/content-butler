@@ -86,6 +86,8 @@ abstract class AbstractCommand extends Command
                 $output->writeln(sprintf('<error>%s</>', $e->getMessage()));
             }
         }
+
+        return 0;
     }
 
     protected function persistDocument(SplFileInfo $fileInfo, $output): void
