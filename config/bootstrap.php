@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
-* This file is part of gpupo/content-butler
+ * This file is part of gpupo/content-butler
  * Created by Gilmar Pupo <contact@gpupo.com>
  * For the information of copyright and license you should read the file
  * LICENSE which is distributed with this source code.
@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 
 use Symfony\Component\Dotenv\Dotenv;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
 $autoload = include_once __DIR__.'/../vendor/autoload.php';
 

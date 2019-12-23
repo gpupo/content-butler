@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace Gpupo\ContentButler\Console;
 
-require  getcwd() . DIRECTORY_SEPARATOR . '/config/bootstrap.php';
+require getcwd().\DIRECTORY_SEPARATOR.'/config/bootstrap.php';
 
 $extraCommands = [];
 $server = sprintf('http://%s:%d/server/', getenv('JACKRABBIT_SERVER'), getenv('JACKRABBIT_PORT'));

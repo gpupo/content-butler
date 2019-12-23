@@ -102,7 +102,7 @@ class DocumentHelper
         $data['integer'] = $millenialInteger;
 
         if (!empty($overshadow)) {
-            $data['name'] = sprintf('%s.%s', substr(sha1($data['name']), 0, 8), $data['extension']);
+            $data['name'] = sprintf('%s.%s', mb_substr(sha1($data['name']), 0, 8), $data['extension']);
         }
 
         return $data;

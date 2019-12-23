@@ -37,7 +37,7 @@ class MillennialHelper
 
     protected function resolveLetter($index): string
     {
-        $count = count($this->letters);
+        $count = \count($this->letters);
 
         if (0 > $index) {
             $index = 0;
@@ -55,8 +55,8 @@ class MillennialHelper
 
         $string = $this->resolveLetter($i - 1).$this->letters[$index];
 
-        if (2 < strlen($string)) {
-            $string = sprintf('%s/%s', substr($string, 0, 2), substr($string, -2));
+        if (2 < \mb_strlen($string)) {
+            $string = sprintf('%s/%s', mb_substr($string, 0, 2), mb_substr($string, -2));
         }
 
         return $string;
