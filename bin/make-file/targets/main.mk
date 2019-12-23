@@ -24,6 +24,11 @@ fixtures: install
 fixtures:
 	./bin/console butler:import:directory Resources/fixture/ --splitter=Resources
 
+## Register node types
+register:
+	./bin/console doctrine:phpcr:register-system-node-types
+	printf "${COLOR_COMMENT}System nodes types OK.${COLOR_RESET}\n"
+
 ## Start the webserver
 start:
 	$(STANDARTDC) up -d content-server nginx
@@ -38,6 +43,6 @@ stop:
 restart: stop start
 
 ## Setup, install and run with fixtures
-demo: setup start
+demo: setup start register
 demo:
 	$(TOOLSDC) run --rm php-fpm make fixtures
