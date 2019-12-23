@@ -27,6 +27,7 @@ before_install:
 
 before_script:
   - ls Resources
+  - make install
   - make demo
   - echo 'JACKRABBIT_SERVER=localhost' >> .env.test
   - sudo cat /etc/hosts
