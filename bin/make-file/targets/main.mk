@@ -43,6 +43,9 @@ stop:
 restart: stop start
 
 ## Setup, install and run with fixtures
-demo: setup start register
+demo: setup start
+demo:
+	@sleep 30 && echo "task1"
+demo: register
 demo:
 	$(TOOLSDC) run --rm php-fpm make fixtures

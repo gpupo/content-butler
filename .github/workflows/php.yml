@@ -33,14 +33,14 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
+      - name: PHP info
+        run: php -v | grep 7.4
+
       - name: Host Prepare
         run: sudo -- sh -c "echo 127.0.0.1	static.localhost content-server >> /etc/hosts"
 
       - name: Httpd Gateway prepare
         run: git clone https://github.com/gpupo/httpd-gateway.git && pushd httpd-gateway && make setup && make alone && popd;
-
-      - name: PHP info
-        run: php -v
 
       - name: Setup
         run: make install && make demo && echo 'JACKRABBIT_SERVER=localhost' >> .env.test
