@@ -8,6 +8,9 @@ os:
 php:
   - 7.4
   - nightly
+jobs:
+  allow_failures:
+  - php: nightly
 services:
   - docker
 
