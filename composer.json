@@ -11,10 +11,10 @@
     "keywords": ["content", "jackrabbit", "PHPCR"],
     "license": "MIT",
     "require": {
-        "php": ">=7.4 || ^8.0",
-        "gpupo/common-sdk": "^6.0",
+        "php": "^8.0",
+        "gpupo/common-sdk": "^6.3",
         "jackalope/jackalope-jackrabbit": "^1.4",
-        "doctrine/phpcr-odm": "^1.5.2"
+        "doctrine/phpcr-odm": "dev-php-8-version-1"
     },
     "autoload": {
         "psr-4": {
