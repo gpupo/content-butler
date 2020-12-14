@@ -4,7 +4,7 @@ Content server with Apache Jackrabbit (backend) and Nginx proxy (frontend)
 
 [![Paypal Donations](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WAQKVZJRG5AUJ&item_name=content-butler)
 
-[![Build Status](https://secure.travis-ci.org/gpupo/content-butler.png?branch=master)](http://travis-ci.org/gpupo/content-butler)
+[![Build Status](https://secure.travis-ci.org/gpupo/content-butler.png?branch=main)](http://travis-ci.org/gpupo/content-butler)
 [![Actions Status](https://github.com/gpupo/content-butler/workflows/CI/badge.svg)](https://github.com/gpupo/content-butler/actions)
 
 ## Requirements
